@@ -9,10 +9,10 @@ namespace ExercicioTripAdvisor
         IWebDriver _driver;
         WebDriverWait wait;
 
-        public TripAdvisorIndexMap(IWebDriver driver)
+        public TripAdvisorIndexMap(IWebDriver driver, int timeout)
         {
             _driver = driver;
-            wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
         }
 
         public IWebElement RadioButtonVoo
@@ -24,7 +24,7 @@ namespace ExercicioTripAdvisor
             }
         }
 
-        public IWebElement SearchBox 
+        public IWebElement SearchBoxFrom 
         { 
             get
             {
@@ -33,12 +33,30 @@ namespace ExercicioTripAdvisor
             }        
         }
 
-        public IWebElement AutoComplete
+        public IWebElement AutoCompleteFrom
         {
             get
             {
                 wait.Until(ExpectedConditions.ElementExists(By.XPath("//ul[@class='autocompleter-choices flights']/li[contains(.,'Rio de Janeiro')]")));
                 return _driver.FindElement(By.XPath("//ul[@class='autocompleter-choices flights']/li[contains(.,'Rio de Janeiro')]"));
+            }
+        }
+
+        public IWebElement SearchBoxTo
+        {
+            get
+            {
+                wait.Until(ExpectedConditions.ElementExists(By.Id("metaFlightTo")));
+                return _driver.FindElement(By.Id("metaFlightTo"));
+            }
+        }
+
+        public IWebElement AutoCompleteTo
+        {
+            get
+            {
+                wait.Until(ExpectedConditions.ElementExists(By.XPath("//ul[@class='autocompleter-choices flights']/li[contains(.,'Londres')]")));
+                return _driver.FindElement(By.XPath("//ul[@class='autocompleter-choices flights']/li[contains(.,'Londres')]"));
             }
         }
     }
